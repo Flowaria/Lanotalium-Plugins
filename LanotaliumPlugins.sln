@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeatlineMetronome", "Beatli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrameRecorder", "FrameRecorder\FrameRecorder.csproj", "{AD62D942-F44A-46FB-B308-FD05CA994A69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HideHeader", "HideHeader\HideHeader.csproj", "{8EE8110B-C94E-4897-B597-5F75E03DA6E5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UiCustomizer", "UICustomizer\UiCustomizer.csproj", "{D65993FD-9295-44BA-820D-E634A3F0DEE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{AD62D942-F44A-46FB-B308-FD05CA994A69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD62D942-F44A-46FB-B308-FD05CA994A69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD62D942-F44A-46FB-B308-FD05CA994A69}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8EE8110B-C94E-4897-B597-5F75E03DA6E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8EE8110B-C94E-4897-B597-5F75E03DA6E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8EE8110B-C94E-4897-B597-5F75E03DA6E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8EE8110B-C94E-4897-B597-5F75E03DA6E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D65993FD-9295-44BA-820D-E634A3F0DEE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D65993FD-9295-44BA-820D-E634A3F0DEE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D65993FD-9295-44BA-820D-E634A3F0DEE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D65993FD-9295-44BA-820D-E634A3F0DEE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

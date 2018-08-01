@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{32175412-678C-4C6A-A4F1-BCBB52A0C2F8}</ProjectGuid>
+    <ProjectGuid>{D65993FD-9295-44BA-820D-E634A3F0DEE4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BeatlineMetronome</RootNamespace>
-    <AssemblyName>BeatlineMetronome</AssemblyName>
+    <RootNamespace>UiCustomizer</RootNamespace>
+    <AssemblyName>Flowaria.UiCustomizer</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -218,7 +217,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BeatlineMetronome.cs" />
+    <Compile Include="UiCustomizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
