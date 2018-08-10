@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using EasyRequest;
 using Lanotalium.Chart;
 using Lanotalium.Plugin;
+using MenuAPI;
 using UnityEngine;
 
 namespace Flowaria.Lanotalium.Plugin
@@ -92,6 +93,18 @@ namespace Flowaria.Lanotalium.Plugin
                         yield return null;
                     }
                 }
+            }
+        }
+        public class DeleteButton : ICreatorButton
+        {
+            public string DefaultName(Language language)
+            {
+                return "Enable Beatline Metronome";
+            }
+
+            public IEnumerator OnClick(LanotaliumContext context, GameObject Buttonobj)
+            {
+                yield return null;
             }
         }
     }

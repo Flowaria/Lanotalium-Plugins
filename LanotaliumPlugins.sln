@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrameRecorder", "FrameRecor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UiCustomizer", "UICustomizer\UiCustomizer.csproj", "{D65993FD-9295-44BA-820D-E634A3F0DEE4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoBGA", "VideoBGA\VideoBGA.csproj", "{0BA88BBF-BF3D-494D-B3B9-C4FF99F16C53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShortcutBridge", "MenuAPI\ShortcutBridge.csproj", "{AD07BC0C-61D1-4BF8-8066-847806761E3B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{D65993FD-9295-44BA-820D-E634A3F0DEE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D65993FD-9295-44BA-820D-E634A3F0DEE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D65993FD-9295-44BA-820D-E634A3F0DEE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BA88BBF-BF3D-494D-B3B9-C4FF99F16C53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BA88BBF-BF3D-494D-B3B9-C4FF99F16C53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BA88BBF-BF3D-494D-B3B9-C4FF99F16C53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BA88BBF-BF3D-494D-B3B9-C4FF99F16C53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD07BC0C-61D1-4BF8-8066-847806761E3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD07BC0C-61D1-4BF8-8066-847806761E3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD07BC0C-61D1-4BF8-8066-847806761E3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD07BC0C-61D1-4BF8-8066-847806761E3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

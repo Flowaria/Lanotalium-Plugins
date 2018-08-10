@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MenuAPI">
+      <HintPath>..\MenuAPI\bin\Debug\MenuAPI.dll</HintPath>
+    </Reference>
     <Reference Include="Schwarzer.Chart">
       <HintPath>..\..\Resource\Schwarzer.Chart.dll</HintPath>
     </Reference>
