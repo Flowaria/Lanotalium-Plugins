@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoBGA", "VideoBGA\VideoB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShortcutBridge", "MenuAPI\ShortcutBridge.csproj", "{AD07BC0C-61D1-4BF8-8066-847806761E3B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickEventHandler", "QuickEventHandler\QuickEventHandler.csproj", "{B022C107-D06E-45AB-B665-D462221D6EF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickEventHandler-Example", "QuickEventHandler-Example\QuickEventHandler-Example.csproj", "{DFD7A96C-761E-45FE-B2CF-1D7CBC25D465}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{AD07BC0C-61D1-4BF8-8066-847806761E3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD07BC0C-61D1-4BF8-8066-847806761E3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD07BC0C-61D1-4BF8-8066-847806761E3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B022C107-D06E-45AB-B665-D462221D6EF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B022C107-D06E-45AB-B665-D462221D6EF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B022C107-D06E-45AB-B665-D462221D6EF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B022C107-D06E-45AB-B665-D462221D6EF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFD7A96C-761E-45FE-B2CF-1D7CBC25D465}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFD7A96C-761E-45FE-B2CF-1D7CBC25D465}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFD7A96C-761E-45FE-B2CF-1D7CBC25D465}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFD7A96C-761E-45FE-B2CF-1D7CBC25D465}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
