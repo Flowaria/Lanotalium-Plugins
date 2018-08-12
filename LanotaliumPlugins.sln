@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickEventHandler", "QuickE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickEventHandler-Example", "QuickEventHandler-Example\QuickEventHandler-Example.csproj", "{DFD7A96C-761E-45FE-B2CF-1D7CBC25D465}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Particlez", "Particlez\Particlez.csproj", "{37437A06-2CD2-404D-BA3B-E088214260F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{DFD7A96C-761E-45FE-B2CF-1D7CBC25D465}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFD7A96C-761E-45FE-B2CF-1D7CBC25D465}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFD7A96C-761E-45FE-B2CF-1D7CBC25D465}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37437A06-2CD2-404D-BA3B-E088214260F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37437A06-2CD2-404D-BA3B-E088214260F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37437A06-2CD2-404D-BA3B-E088214260F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37437A06-2CD2-404D-BA3B-E088214260F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
