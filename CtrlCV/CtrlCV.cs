@@ -14,39 +14,32 @@ namespace Flowaria.Lanotalium.Plugin
     public class Preferences
     {
         [Name("Use Sound Effect for key pressed event")]
-        [Default(true)]
-        public bool UseSoundEffect;
+        public bool UseSoundEffect = true;
 
         [Name("Notify the count of copied elements")]
-        [Default(false)]
-        public bool CopyPasteNotification;
+        public bool CopyPasteNotification = false;
     }
 
     public class SpecialPaste
     {
         [Name("How many times should be paste")]
-        [Range(1.0f, 2000.0f)]
-        [Default(1.0f)]
-        public int Count;
+        [Range(1, 2000)]
+        public int Count = 1;
 
         [Name("└ Timing offset (zero will paste all in same timing)")]
         [Range(-500.0f,500.0f)]
-        [Default(1.0f)]
-        public float TimeOffset;
+        public float TimeOffset = 1.0f;
 
         [Name("(Tap, Hold Note) Degree offset")]
         [Range(-360.0f, 360.0f)]
-        [Default(0.0f)]
-        public float DegOffset;
+        public float DegOffset = 0.0f;
 
         [Name("└ Is additive for each paste?")]
-        [Default(false)]
-        public bool DegEach;
+        public bool DegEach = false;
 
         [Name("(Horizontal) Multiply Radius for each paste")]
         [Range(0, 1000)]
-        [Default(1)]
-        public float RadiusMultiply;
+        public float RadiusMultiply = 1.0f;
     }
 
     public class CtrlCV : ILanotaliumPlugin
