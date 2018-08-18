@@ -7,11 +7,24 @@ using System.Threading.Tasks;
 using EasyRequest;
 using Lanotalium.Chart;
 using Lanotalium.Plugin;
-using MenuAPI;
+using Lanotalium.Plugin.Files;
 using UnityEngine;
 
 namespace Flowaria.Lanotalium.Plugin
 {
+    [FileName("beatlinemetronome")]
+    public class TranslationString
+    {
+        [NodeName("error.projectnotloaded")]
+        public string ProjectNotLoaded = "Project is not loaded! Try again when you loaded Project";
+
+        [NodeName("error.usedefault")]
+        public string UseDefaultSetting = "Error Occured! Using Default setting! (click)";
+
+        [NodeName("setting.title")]
+        public string SettingTitle = "Please choose sound type (0: click, 1: flick in, 2: flick out)";
+    }
+
     public class SoundTypeData
     {
         [Range(0,2)]
@@ -48,20 +61,22 @@ namespace Flowaria.Lanotalium.Plugin
 
         public IEnumerator Process(LanotaliumContext context)
         {
+            var t = Translation.InitTranslation<TranslationString>();
+
             if(!context.IsProjectLoaded)
             {
-                context.MessageBox.ShowMessage("Project is not loaded! Try again when you loaded Project");
+                context.MessageBox.ShowMessage(t.ProjectNotLoaded);
             }
             else
             {
                 int type = 1;
                 Request<SoundTypeData> request = new Request<SoundTypeData>();
-                yield return context.UserRequest.Request(request, "Please choose sound type (0: click, 1: flick in, 2: flick out)");
+                yield return context.UserRequest.Request(request, t.SettingTitle);
                 
                 if(request.Succeed)
                     type = request.Object.Type;
                 else
-                    context.MessageBox.ShowMessage("Error Occured! Using Default setting! (click)");
+                    context.MessageBox.ShowMessage(t.UseDefaultSetting);
 
                 var comp = context.EditorManager.InspectorWindow.ComponentBpm;
                 if (!comp.EnableBeatline)
@@ -93,18 +108,6 @@ namespace Flowaria.Lanotalium.Plugin
                         yield return null;
                     }
                 }
-            }
-        }
-        public class DeleteButton : ICreatorButton
-        {
-            public string DefaultName(Language language)
-            {
-                return "Enable Beatline Metronome";
-            }
-
-            public IEnumerator OnClick(LanotaliumContext context, GameObject Buttonobj)
-            {
-                yield return null;
             }
         }
     }
