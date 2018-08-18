@@ -30,26 +30,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MenuAPI">
-      <HintPath>..\MenuAPI\bin\Debug\MenuAPI.dll</HintPath>
-    </Reference>
     <Reference Include="Schwarzer.Chart">
-      <HintPath>..\..\Resource\Schwarzer.Chart.dll</HintPath>
-    </Reference>
-    <Reference Include="Schwarzer.Dialogs">
-      <HintPath>..\..\Resource\Schwarzer.Dialogs.dll</HintPath>
-    </Reference>
-    <Reference Include="Schwarzer.Lanotalium">
-      <HintPath>..\..\Resource\Schwarzer.Lanotalium.dll</HintPath>
+      <HintPath>..\..\Reference\Schwarzer.Chart.dll</HintPath>
     </Reference>
     <Reference Include="Schwarzer.StringReader">
-      <HintPath>..\..\Resource\Schwarzer.StringReader.dll</HintPath>
+      <HintPath>..\..\Reference\Schwarzer.StringReader.dll</HintPath>
     </Reference>
     <Reference Include="Schwarzer.Unity">
-      <HintPath>..\..\Resource\Schwarzer.Unity.dll</HintPath>
+      <HintPath>..\..\Reference\Schwarzer.Unity.dll</HintPath>
     </Reference>
     <Reference Include="Schwarzer.WebApi">
-      <HintPath>..\..\Resource\Schwarzer.WebApi.dll</HintPath>
+      <HintPath>..\..\Reference\Schwarzer.WebApi.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -59,56 +50,65 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="UnityEngine">
-      <HintPath>..\..\Resource\UnityEngine.dll</HintPath>
+    <Reference Include="UnityEngine.TerrainModule">
+      <HintPath>..\..\Reference\UnityEngine.TerrainModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.AccessibilityModule">
-      <HintPath>..\..\Resource\UnityEngine.AccessibilityModule.dll</HintPath>
+    <Reference Include="UnityEngine.TerrainPhysicsModule">
+      <HintPath>..\..\Reference\UnityEngine.TerrainPhysicsModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.AIModule">
-      <HintPath>..\..\Resource\UnityEngine.AIModule.dll</HintPath>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>..\..\Reference\UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Analytics">
-      <HintPath>..\..\Resource\UnityEngine.Analytics.dll</HintPath>
+    <Reference Include="UnityEngine.TilemapModule">
+      <HintPath>..\..\Reference\UnityEngine.TilemapModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.AnimationModule">
-      <HintPath>..\..\Resource\UnityEngine.AnimationModule.dll</HintPath>
+    <Reference Include="UnityEngine.Timeline">
+      <HintPath>..\..\Reference\UnityEngine.Timeline.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.ARModule">
-      <HintPath>..\..\Resource\UnityEngine.ARModule.dll</HintPath>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\..\Reference\UnityEngine.UI.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.AssetBundleModule">
-      <HintPath>..\..\Resource\UnityEngine.AssetBundleModule.dll</HintPath>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>..\..\Reference\UnityEngine.UIElementsModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.AudioModule">
-      <HintPath>..\..\Resource\UnityEngine.AudioModule.dll</HintPath>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>..\..\Reference\UnityEngine.UIModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.ClothModule">
-      <HintPath>..\..\Resource\UnityEngine.ClothModule.dll</HintPath>
+    <Reference Include="UnityEngine.UNETModule">
+      <HintPath>..\..\Reference\UnityEngine.UNETModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.ClusterInputModule">
-      <HintPath>..\..\Resource\UnityEngine.ClusterInputModule.dll</HintPath>
+    <Reference Include="UnityEngine.UnityAnalyticsModule">
+      <HintPath>..\..\Reference\UnityEngine.UnityAnalyticsModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.ClusterRendererModule">
-      <HintPath>..\..\Resource\UnityEngine.ClusterRendererModule.dll</HintPath>
+    <Reference Include="UnityEngine.UnityConnectModule">
+      <HintPath>..\..\Reference\UnityEngine.UnityConnectModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\Resource\UnityEngine.CoreModule.dll</HintPath>
+    <Reference Include="UnityEngine.UnityWebRequestAudioModule">
+      <HintPath>..\..\Reference\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.CrashReportingModule">
-      <HintPath>..\..\Resource\UnityEngine.CrashReportingModule.dll</HintPath>
+    <Reference Include="UnityEngine.UnityWebRequestModule">
+      <HintPath>..\..\Reference\UnityEngine.UnityWebRequestModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.DirectorModule">
-      <HintPath>..\..\Resource\UnityEngine.DirectorModule.dll</HintPath>
+    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
+      <HintPath>..\..\Reference\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.GameCenterModule">
-      <HintPath>..\..\Resource\UnityEngine.GameCenterModule.dll</HintPath>
+    <Reference Include="UnityEngine.UnityWebRequestWWWModule">
+      <HintPath>..\..\Reference\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.GridModule">
-      <HintPath>..\..\Resource\UnityEngine.GridModule.dll</HintPath>
+    <Reference Include="UnityEngine.VehiclesModule">
+      <HintPath>..\..\Reference\UnityEngine.VehiclesModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.ImageConversionModule">
-      <HintPath>..\..\Resource\UnityEngine.ImageConversionModule.dll</HintPath>
+    <Reference Include="UnityEngine.VideoModule">
+      <HintPath>..\..\Reference\UnityEngine.VideoModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VRModule">
+      <HintPath>..\..\Reference\UnityEngine.VRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.WebModule">
+      <HintPath>..\..\Reference\UnityEngine.WebModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.WindModule">
+      <HintPath>..\..\Reference\UnityEngine.WindModule.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
