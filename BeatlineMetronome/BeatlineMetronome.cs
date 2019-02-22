@@ -10,6 +10,8 @@ using Lanotalium.Plugin;
 using Lanotalium.Plugin.Files;
 using UnityEngine;
 
+
+///Content/Beatline
 namespace Flowaria.Lanotalium.Plugin
 {
     [FileName("beatlinemetronome")]

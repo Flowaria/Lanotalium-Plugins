@@ -30,23 +30,29 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Schwarzer.Chart">
-      <HintPath>..\..\Resource\Schwarzer.Chart.dll</HintPath>
+    <Reference Include="Schwarzer.Chart, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Users\Dropbox\Dropbox\Lanotalium\Lanotalium.Launcher.v2\Lanotalium\Lanotalium\Lanotalium_Data\Managed\Schwarzer.Chart.dll</HintPath>
     </Reference>
-    <Reference Include="Schwarzer.Dialogs">
-      <HintPath>..\..\Resource\Schwarzer.Dialogs.dll</HintPath>
+    <Reference Include="Schwarzer.Dialogs, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Users\Dropbox\Dropbox\Lanotalium\Lanotalium.Launcher.v2\Lanotalium\Lanotalium\Lanotalium_Data\Managed\Schwarzer.Dialogs.dll</HintPath>
     </Reference>
-    <Reference Include="Schwarzer.Lanotalium">
-      <HintPath>..\..\Resource\Schwarzer.Lanotalium.dll</HintPath>
+    <Reference Include="Schwarzer.Lanotalium, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Users\Dropbox\Dropbox\Lanotalium\Lanotalium.Launcher.v2\Lanotalium\Lanotalium\Lanotalium_Data\Managed\Schwarzer.Lanotalium.dll</HintPath>
     </Reference>
-    <Reference Include="Schwarzer.StringReader">
-      <HintPath>..\..\Resource\Schwarzer.StringReader.dll</HintPath>
+    <Reference Include="Schwarzer.StringReader, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Users\Dropbox\Dropbox\Lanotalium\Lanotalium.Launcher.v2\Lanotalium\Lanotalium\Lanotalium_Data\Managed\Schwarzer.StringReader.dll</HintPath>
     </Reference>
-    <Reference Include="Schwarzer.Unity">
-      <HintPath>..\..\Resource\Schwarzer.Unity.dll</HintPath>
+    <Reference Include="Schwarzer.Unity, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Users\Dropbox\Dropbox\Lanotalium\Lanotalium.Launcher.v2\Lanotalium\Lanotalium\Lanotalium_Data\Managed\Schwarzer.Unity.dll</HintPath>
     </Reference>
-    <Reference Include="Schwarzer.WebApi">
-      <HintPath>..\..\Resource\Schwarzer.WebApi.dll</HintPath>
+    <Reference Include="Schwarzer.WebApi, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Users\Dropbox\Dropbox\Lanotalium\Lanotalium.Launcher.v2\Lanotalium\Lanotalium\Lanotalium_Data\Managed\Schwarzer.WebApi.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

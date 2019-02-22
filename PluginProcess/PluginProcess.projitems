@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>bdfe184f-0199-4dec-9484-73a485a32922</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Lanotalium.Plugin.Simple</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)HotKey\IHotKey.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HotKey\HotKeyManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ObjectProcess\ObjectProcess.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ObjectProcess\ObjectProcessManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UserInput\Configuration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Wrapper\ResourceBundle.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)ObjectProcess\" />
+  </ItemGroup>
+</Project>

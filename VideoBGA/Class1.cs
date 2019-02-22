@@ -17,12 +17,12 @@ namespace Flowaria.Lanotalium.Plugin
     {
         public string Name(Language language)
         {
-            return "VideoBGA?";
+            return "VideoBGA";
         }
 
         public string Description(Language language)
         {
-            return "VideoBGA?";
+            return "VideoBGA";
         } 
 
         public IEnumerator Process(LanotaliumContext context)
