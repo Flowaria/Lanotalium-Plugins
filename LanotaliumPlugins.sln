@@ -29,10 +29,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp1", "WpfApp1\WpfApp1.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterConfig", "BetterConfig\BetterConfig.csproj", "{927B8A23-EF58-49E3-AC4D-68F94D654AE5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCatchRail", "BetterCatchRail\BetterCatchRail.csproj", "{586B6BA3-6234-4242-9B69-C9ABEB897103}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnglelineGuide", "AnglelineGuide\AnglelineGuide.csproj", "{3848C037-2037-4A83-86A8-1F7921E70960}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		PluginProcess\PluginProcess.projitems*{195b17c5-bc83-4af1-93ad-478a9cbe282e}*SharedItemsImports = 4
 		PluginProcess\PluginProcess.projitems*{2482c272-6da2-4329-add1-0287f5298a90}*SharedItemsImports = 4
+		PluginProcess\PluginProcess.projitems*{3848c037-2037-4a83-86a8-1f7921e70960}*SharedItemsImports = 4
+		PluginProcess\PluginProcess.projitems*{586b6ba3-6234-4242-9b69-c9abeb897103}*SharedItemsImports = 4
 		PluginProcess\PluginProcess.projitems*{bdfe184f-0199-4dec-9484-73a485a32922}*SharedItemsImports = 13
 		PluginProcess\PluginProcess.projitems*{d65993fd-9295-44ba-820d-e634a3f0dee4}*SharedItemsImports = 4
 	EndGlobalSection
@@ -89,6 +95,14 @@ Global
 		{927B8A23-EF58-49E3-AC4D-68F94D654AE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{927B8A23-EF58-49E3-AC4D-68F94D654AE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{927B8A23-EF58-49E3-AC4D-68F94D654AE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{586B6BA3-6234-4242-9B69-C9ABEB897103}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{586B6BA3-6234-4242-9B69-C9ABEB897103}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{586B6BA3-6234-4242-9B69-C9ABEB897103}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{586B6BA3-6234-4242-9B69-C9ABEB897103}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3848C037-2037-4A83-86A8-1F7921E70960}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3848C037-2037-4A83-86A8-1F7921E70960}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3848C037-2037-4A83-86A8-1F7921E70960}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3848C037-2037-4A83-86A8-1F7921E70960}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
