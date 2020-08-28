@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BeatlineGuide
+namespace PluginAutorun
 {
     public class Class1
     {

@@ -62,8 +62,13 @@ namespace Flowaria.Lanotalium.Plugin.Tweak
         public bool SafetyLock = true;
     }
 
-    public class SuperEase
+    public class SuperEase : TweakModule, ITweakModule
     {
+        public string GetModuleName()
+        {
+            return "";
+        }
+
         LanotaliumContext context;
         public SuperEase(LanotaliumContext context, EditorTweakCfg cfg)
         {

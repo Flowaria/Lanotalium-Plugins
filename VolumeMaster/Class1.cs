@@ -1,8 +1,11 @@
 ﻿using EasyRequest;
+using Flowaria.AutorunPlugin;
 using Lanotalium.Plugin;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,111 +17,31 @@ namespace VolumeMaster
     {
         [Name("Click note Volume (default: 0.2)")]
         [Range(0.0f, 1.0f)]
-        public float voClick = Class1.VoClick;
+        public float voClick = VolumeData.VoClick;
 
         [Name("Flick note Volume (default: 0.2)")]
         [Range(0.0f, 1.0f)]
-        public float voFlick = Class1.VoFlick;
+        public float voFlick = VolumeData.VoFlick;
 
         [Name("Rail note Volume (default: 0.2)")]
         [Range(0.0f, 1.0f)]
-        public float voRail = Class1.VoRail;
+        public float voRail = VolumeData.VoRail;
 
         [Name("Music Volume (default: 0.4)")]
         [Range(0.0f, 1.0f)]
-        public float voMusic = Class1.VoMusic;
+        public float voMusic = VolumeData.VoMusic;
+    }
+
+    public class AutorunConfig
+    {
+        public float voClick = 0.2f;
+        public float voFlick = 0.2f;
+        public float voRail = 0.2f;
+        public float voMusic = 0.4f;
     }
 
     public class Class1 : ILanotaliumPlugin
     {
-        public static float VoClick
-        {
-            get
-            {
-                var obj = GameObject.Find("AudioEffectManager/Click");
-                if(obj != null)
-                {
-                    return obj.GetComponent<AudioSource>().volume;
-                }
-                return 0.2f;
-            }
-            set
-            {
-                var obj = GameObject.Find("AudioEffectManager/Click");
-                if (obj != null)
-                {
-                    obj.GetComponent<AudioSource>().volume = value;
-                }
-            }
-        }
-
-        public static float VoFlick
-        {
-            get
-            {
-                var obj = GameObject.Find("AudioEffectManager/Flickin");
-                if (obj != null)
-                {
-                    return obj.GetComponent<AudioSource>().volume;
-                }
-                return 0.2f;
-            }
-            set
-            {
-                var obj = GameObject.Find("AudioEffectManager/Flickin");
-                var obj2 = GameObject.Find("AudioEffectManager/Flickout");
-                if (obj != null && obj2 != null)
-                {
-                    obj.GetComponent<AudioSource>().volume = value ;
-                    obj2.GetComponent<AudioSource>().volume = value;
-                }
-            }
-        }
-
-        public static float VoRail
-        {
-            get
-            {
-                var obj = GameObject.Find("AudioEffectManager/Rail");
-                if (obj != null)
-                {
-                    return obj.GetComponent<AudioSource>().volume;
-                }
-                return 0.2f;
-            }
-            set
-            {
-                var obj = GameObject.Find("AudioEffectManager/Rail");
-                var obj2 = GameObject.Find("AudioEffectManager/Railend");
-                if (obj != null && obj2 != null)
-                {
-                    obj.GetComponent<AudioSource>().volume = value;
-                    obj2.GetComponent<AudioSource>().volume = value;
-                }
-            }
-        }
-
-        public static float VoMusic
-        {
-            get
-            {
-                var obj = GameObject.Find("ChartMusic");
-                if (obj != null)
-                {
-                    return obj.GetComponent<AudioSource>().volume;
-                }
-                return 0.4f;
-            }
-            set
-            {
-                var obj = GameObject.Find("ChartMusic");
-                if (obj != null)
-                {
-                    obj.GetComponent<AudioSource>().volume = value;
-                }
-            }
-        }
-
         public string Description(Language language)
         {
             return "Change volume";
@@ -129,9 +52,39 @@ namespace VolumeMaster
             return "Volume";
         }
 
+        [PluginName("VolumeMaster")]
+        public IEnumerator Autorun_Awake(string configPath, LanotaliumContext context)
+        {
+            if (File.Exists(configPath))
+            {
+                try
+                {
+                    var content = File.ReadAllText(configPath);
+                    var config = JsonConvert.DeserializeObject<AutorunConfig>(content);
+                    if (config != null)
+                    {
+                        VolumeData.VoClick = config.voClick;
+                        VolumeData.VoFlick = config.voFlick;
+                        VolumeData.VoRail = config.voRail;
+                        VolumeData.VoMusic = config.voMusic;
+                    }
+                }
+                catch
+                {
+
+                }
+            }
+            else
+            {
+                var content = JsonConvert.SerializeObject(new AutorunConfig());
+                File.WriteAllText(configPath, content);
+            }
+
+            yield return null;
+        }
+
         public IEnumerator Process(LanotaliumContext context)
         {
-            System.Windows.Application.Run()
             Request<VolumeContext> r = new Request<VolumeContext>();
             
             yield return context.UserRequest.Request(r, "Volume Master");
@@ -139,10 +92,20 @@ namespace VolumeMaster
             if(r.Succeed)
             {
                 var o = r.Object;
-                VoClick = o.voClick;
-                VoFlick = o.voFlick;
-                VoRail = o.voRail;
-                VoMusic = o.voMusic;
+                VolumeData.VoClick = o.voClick;
+                VolumeData.VoFlick = o.voFlick;
+                VolumeData.VoRail = o.voRail;
+                VolumeData.VoMusic = o.voMusic;
+
+                var config = new AutorunConfig()
+                {
+                    voClick = o.voClick,
+                    voFlick = o.voFlick,
+                    voMusic = o.voMusic,
+                    voRail = o.voRail
+                };
+                var content = JsonConvert.SerializeObject(config);
+                File.WriteAllText(PathUtil.GetConfigPath("VolumeMaster"), content);
             }
         }
     }

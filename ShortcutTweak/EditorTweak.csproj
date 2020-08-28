@@ -260,13 +260,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tweak\BeatlineMetronome.cs" />
-    <Compile Include="Tweak\CopyPaster.cs" />
+    <Compile Include="Tweak\Tweak\BeatlineMetronome.cs" />
+    <Compile Include="Tweak\Tweak\CopyPaster.cs" />
     <Compile Include="TweakManager.cs" />
     <Compile Include="EditorTweak.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tweak\Dragger.cs" />
-    <Compile Include="Tweak\SuperEase.cs" />
+    <Compile Include="Tweak\Tweak\Dragger.cs" />
+    <Compile Include="Tweak\ITweakModule.cs" />
+    <Compile Include="Tweak\Tweak\SuperEase.cs" />
+    <Compile Include="Tweak\TweakModule.cs" />
   </ItemGroup>
   <Import Project="..\PluginProcess\PluginProcess.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

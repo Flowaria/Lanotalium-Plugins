@@ -4,15 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{53258524-CBCF-4D15-9189-8C5D7B0D9265}</ProjectGuid>
+    <ProjectGuid>{061EED9F-5F90-427C-BFA2-1C86B0E77364}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VolumeMaster</RootNamespace>
-    <AssemblyName>VolumeMaster</AssemblyName>
+    <RootNamespace>GuideLines</RootNamespace>
+    <AssemblyName>GuideLines</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Flowaria.AutorunPlugin">
-      <HintPath>C:\Dropbox\Dropbox\Lanotalium\Lanotalium.Launcher.v2\Lanotalium\Lanotalium\BepInEx\plugins\Flowaria.AutorunPlugin.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Dropbox\Dropbox\Lanotalium\Lanotalium.Launcher.v2\Lanotalium\Lanotalium\Lanotalium_Data\Managed\Newtonsoft.Json.dll</HintPath>
@@ -65,6 +61,15 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="Unity.Analytics.DataPrivacy">
+      <HintPath>C:\Dropbox\Dropbox\Lanotalium\Lanotalium.Launcher.v2\Lanotalium\Lanotalium\Lanotalium_Data\Managed\Unity.Analytics.DataPrivacy.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.StandardEvents">
+      <HintPath>C:\Dropbox\Dropbox\Lanotalium\Lanotalium.Launcher.v2\Lanotalium\Lanotalium\Lanotalium_Data\Managed\Unity.Analytics.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.Tracker">
+      <HintPath>C:\Dropbox\Dropbox\Lanotalium\Lanotalium.Launcher.v2\Lanotalium\Lanotalium\Lanotalium_Data\Managed\Unity.Analytics.Tracker.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>C:\Dropbox\Dropbox\Lanotalium\Lanotalium.Launcher.v2\Lanotalium\Lanotalium\Lanotalium_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
@@ -263,8 +268,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="GuidelineManager.cs" />
+    <Compile Include="LineLayoutManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VolumeData.cs" />
   </ItemGroup>
+  <Import Project="..\PluginProcess\PluginProcess.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
