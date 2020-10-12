@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A5934690-4750-4CC0-B7B8-9DB03CF040D8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Flowaria.Railnote.Curve</RootNamespace>
+    <AssemblyName>Flowaria.Railnote.Curve</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>C:\Dropbox\Dropbox\Lanotalium\Lanotalium.Launcher.v2\Lanotalium\Lanotalium\BepInEx\core\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx">
+      <HintPath>C:\Dropbox\Dropbox\Lanotalium\Lanotalium.Launcher.v2\Lanotalium\Lanotalium\BepInEx\core\BepInEx.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx.Harmony">
+      <HintPath>C:\Dropbox\Dropbox\Lanotalium\Lanotalium.Launcher.v2\Lanotalium\Lanotalium\BepInEx\core\BepInEx.Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="Schwarzer.Lanotalium">
+      <HintPath>C:\Dropbox\Dropbox\Lanotalium\Lanotalium.Launcher.v2\Lanotalium\Lanotalium\Lanotalium_Data\Managed\Schwarzer.Lanotalium.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine">
+      <HintPath>C:\Dropbox\Dropbox\Lanotalium\Lanotalium.Launcher.v2\Lanotalium\Lanotalium\Lanotalium_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Dropbox\Dropbox\Lanotalium\Lanotalium.Launcher.v2\Lanotalium\Lanotalium\Lanotalium_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>C:\Dropbox\Dropbox\Lanotalium\Lanotalium.Launcher.v2\Lanotalium\Lanotalium\Lanotalium_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Dropbox\Dropbox\Lanotalium\Lanotalium.Launcher.v2\Lanotalium\Lanotalium\Lanotalium_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entry.cs" />
+    <Compile Include="Lib\EasingLookupTable.cs" />
+    <Compile Include="Lib\HoldLineMeshRenderer.cs" />
+    <Compile Include="Lib\HoldLineWorker.cs" />
+    <Compile Include="Lib\MeshPoint.cs" />
+    <Compile Include="Lib\Threadsafe\ThreadsafeCurve.cs" />
+    <Compile Include="Lib\Threadsafe\ThreadsafeEase.cs" />
+    <Compile Include="Patch\HoldNoteManager\HoldNoteManager_Initialize.cs" />
+    <Compile Include="Patch\HoldNoteManager\HoldNoteManager_InstantiateHeadNote.cs" />
+    <Compile Include="Patch\HoldNoteManager\HoldNoteManager_UpdateAllLineMaterial.cs" />
+    <Compile Include="Patch\HoldNoteManager\HoldNoteManager_UpdateAllLineRenderers.cs" />
+    <Compile Include="Patch\OperationManager\OperationManager_RefreshJointAbsoluteValues.cs" />
+    <Compile Include="Patch\OperationManager\OperationManager_SetHoldNoteDegree.cs" />
+    <Compile Include="Patch\OperationManager\OperationManager_SetHoldNoteDuration.cs" />
+    <Compile Include="Patch\OperationManager\OperationManager_SetHoldNoteTime.cs" />
+    <Compile Include="Patch\OperationManager\OperationManager_SetJointNoteDegree.cs" />
+    <Compile Include="Patch\OperationManager\OperationManager_SetJointNoteEase.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

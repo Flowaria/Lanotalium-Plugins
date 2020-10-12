@@ -117,7 +117,7 @@ namespace Flowaria.AutorunPlugin
             }
         }
 
-        private Regex _NameRegex = new Regex(@"^[\w\-. ]+$");
+        private readonly Regex _NameRegex = new Regex(@"^[\w\-. ]+$");
 
         private void AddPlugin(string name, AutorunCallback func)
         {

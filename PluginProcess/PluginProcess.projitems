@@ -15,6 +15,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)HotKey\HotKeyManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ObjectProcess\ObjectProcess.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ObjectProcess\ObjectProcessManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RuntimeRequest\DefaultValueWork.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RuntimeRequest\RequestField.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RuntimeRequest\RequestFieldType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RuntimeRequest\RuntimeRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RuntimeRequest\RuntimeRequestResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UserInput\Configuration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Wrapper\ExternalBehaviour.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Wrapper\ResourceBundle.cs" />

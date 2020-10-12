@@ -26,97 +26,143 @@ namespace Flowaria.Lanotalium.Plugin
 
         public IEnumerator Process(LanotaliumContext context)
         {
-            if(context.IsProjectLoaded)
+            if(!context.IsProjectLoaded)
             {
-                if(context.OperationManager.SelectedTapNote.Count == 2)
-                {
-                    Request<AskCatchRail> r = new Request<AskCatchRail>();
-                    yield return context.UserRequest.Request(r, "Create Catch Rail (Advanced)");
-                    if(r.Succeed)
-                    {
-                        var p = r.Object;
-                        var o = context.OperationManager;
-                        var rand = new System.Random();
+                yield break;
+            }
 
-                        LanotaTapNote first = null, last = null; 
-
-                        if(o.SelectedTapNote.First().Time < o.SelectedTapNote.Last().Time)
-                        {
-                            first = o.SelectedTapNote.First();
-                            last = o.SelectedTapNote.Last();
-                        }
-                        else
-                        {
-                            last = o.SelectedTapNote.First();
-                            first = o.SelectedTapNote.Last();
-                        }
-
-                        var count = p.Count;
-                        if(count == 0)
-                        {
-                            o.InspectorManager.ComponentBpm.EnableBeatline = true;
-
-                            var beat = first.Time;
-                            while (beat < last.Time)
-                            {
-                                beat = o.InspectorManager.ComponentBpm.FindPrevOrNextBeatline(beat, true);
-                                count++;
-                            }
-                            count--;
-                        }
-
-                        if(count > 0)
-                        {
-                            var deltaTime = (last.Time - first.Time) / (count + 1);
-                            var deltaDegree = (last.Degree - first.Degree);
-                            if(p.Nearest)
-                            {
-                                if(Math.Abs(deltaDegree) > 180)
-                                {
-                                    deltaDegree = 360 - (Math.Abs(deltaDegree) % 360);
-                                }
-                            }
-
-                            var sizePattern = new IntPattern(ValidSizeAndTypePattern);
-                            var typePattern = new IntPattern(ValidSizeAndTypePattern);
-                            if (sizePattern.ReadPattern(p.SizePattern) && typePattern.ReadPattern(p.TypePattern))
-                            {
-                                for (int i = 0; i < count; i++)
-                                {
-                                    var percent = (float)(i + 1) / (float)(count + 1);
-                                    var note = new LanotaTapNote()
-                                    {
-                                        Time = first.Time + (deltaTime * (i + 1)),
-                                        Degree = first.Degree + deltaDegree * Ease.CalculateEase(percent, p.Ease),
-                                        @Type = ConvertNoteType(typePattern.GetValue(i)),
-                                        Size = sizePattern.GetValue(i),
-                                    };
-                                    if (p.Random != 0.0f)
-                                    {
-                                        var randDegree = (float)rand.NextDouble() * p.Random;
-                                        note.Degree += rand.Next(0, 1) == 0 ? randDegree : -randDegree;
-                                    }
-                                    o.AddTapNote(note);
-                                }
-                            }
-                            else
-                            {
-                                context.MessageBox.ShowMessage("Error in Pattern String!");
-                            }
-                        }
-                        else
-                        {
-                            context.MessageBox.ShowMessage("There is no Beatline Between Two Selected note");
-                        }
-                    }
-                }
-                else if(context.OperationManager.SelectedTapNote.Count > 2)
+            if (context.OperationManager.SelectedTapNote.Count != 2)
+            {
+                if (context.OperationManager.SelectedTapNote.Count > 2)
                 {
                     context.MessageBox.ShowMessage("More then 2 Tap note selected");
                 }
                 else
                 {
                     context.MessageBox.ShowMessage("Please Select 2 Click / Catch note");
+                }
+
+                yield break;
+            }
+
+            Request<AskCatchRail> r = new Request<AskCatchRail>();
+            yield return context.UserRequest.Request(r, "Create Catch Rail (Advanced)");
+            if (r.Succeed)
+            {
+                var p = r.Object;
+                var o = context.OperationManager;
+                var rand = new System.Random();
+
+                LanotaTapNote first = null, last = null;
+
+                if (o.SelectedTapNote.First().Time < o.SelectedTapNote.Last().Time)
+                {
+                    first = o.SelectedTapNote.First();
+                    last = o.SelectedTapNote.Last();
+                }
+                else
+                {
+                    last = o.SelectedTapNote.First();
+                    first = o.SelectedTapNote.Last();
+                }
+
+                var count = p.Count;
+                if (count == 0)
+                {
+                    var bpms = o.InspectorManager.ComponentBpm;
+                    bpms.EnableBeatline = true;
+
+                    var firstIdx = o.FindNearestBeatlineIndexByTime(first.Time);
+                    var lastIdx = o.FindNearestBeatlineIndexByTime(last.Time);
+
+                    count = lastIdx - firstIdx - 1;
+
+                    if (count > 99999)
+                    {
+                        context.MessageBox.ShowMessage("Infinite Loop Detected!\nTry again");
+                        yield break;
+                    }
+
+                    /*
+                    var beat = first.Time;
+                    while (beat < last.Time)
+                    {
+                        if(count > 99999)
+                        {
+                            context.MessageBox.ShowMessage("Infinite Loop Detected!\nTry again");
+                            yield break;
+                        }
+
+                        beat = o.InspectorManager.ComponentBpm.FindPrevOrNextBeatline(beat, true);
+                        count++;
+                    }
+                    count--;
+                    */
+                }
+
+                if (count <= 0)
+                {
+                    context.MessageBox.ShowMessage("There is no Beatline Between Two Selected note");
+                    yield break;
+                }
+
+                var deltaTime = (last.Time - first.Time) / (count + 1);
+                var firstDegMod = first.Degree % 360.0f;
+                var lastDegMod = last.Degree % 360.0f;
+
+                var firstDegAbs = firstDegMod > 0.0f ? firstDegMod : 360 - (-firstDegMod);
+                var lastDegAbs = lastDegMod > 0.0f ? lastDegMod : 360 - (-lastDegMod);
+                var deltaDegree = (lastDegAbs) - (firstDegAbs);
+
+                //Clockwise but delta is Anti-clockwise
+                if (p.Clockwise && deltaDegree > 0.0f)
+                {
+                    deltaDegree = 360.0f - deltaDegree;
+                }
+                //Anti-clockwise but delta is Clockwise
+                else if (!p.Clockwise && deltaDegree < 0.0f)
+                {
+                    deltaDegree = 360.0f + deltaDegree;
+                }
+
+                if(p.Revolution > 0)
+                {
+                    if (p.Clockwise)
+                    {
+                        deltaDegree -= p.Revolution * 360.0f;
+                    }
+
+                    else
+                    {
+                        deltaDegree += p.Revolution * 360.0f;
+                    }  
+                }
+
+                var sizePattern = new IntPattern(ValidSizeAndTypePattern);
+                var typePattern = new IntPattern(ValidSizeAndTypePattern);
+                if (sizePattern.ReadPattern(p.SizePattern) && typePattern.ReadPattern(p.TypePattern))
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        var percent = (float)(i + 1) / (float)(count + 1);
+                        var note = new LanotaTapNote()
+                        {
+                            Time = first.Time + (deltaTime * (i + 1)),
+                            Degree = first.Degree + deltaDegree * Ease.CalculateEase(percent, p.Ease),
+                            @Type = ConvertNoteType(typePattern.GetValue(i)),
+                            Size = sizePattern.GetValue(i),
+                        };
+                        if (p.Random != 0.0f)
+                        {
+                            var randDegree = ((float)rand.NextDouble() - 0.5f) * 2.0f * p.Random;
+                            note.Degree += randDegree;
+                        }
+                        o.AddTapNote(note);
+                    }
+                }
+                else
+                {
+                    context.MessageBox.ShowMessage("Error in Pattern String!");
                 }
             }
         }
@@ -201,7 +247,11 @@ namespace Flowaria.Lanotalium.Plugin
         [Range(0.0f, 999999.0f)]
         public float Random = 0.0f;
 
-        [Name("Use Nearest Path")]
-        public bool Nearest = false;
+        [Name("Revolution Count")]
+        [Range(0, 999999999)]
+        public int Revolution = 0;
+
+        [Name("Clockwise")]
+        public bool Clockwise = true;
     }
 }
