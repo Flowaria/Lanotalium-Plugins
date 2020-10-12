@@ -5,6 +5,7 @@ namespace Flowaria.Railnote.Curve.Lib
     public static class EasingLookupTable
     {
         private static ThreadsafeCurve _Curve = null;
+
         private static ThreadsafeEase
             T1, T2, T3,
             T4, T5, T6,
@@ -50,7 +51,7 @@ namespace Flowaria.Railnote.Curve.Lib
 
         public static float MoveEasePercentEvaluate(float percent, bool demoMode)
         {
-            if(demoMode)
+            if (demoMode)
             {
                 return _Curve.Evaluate(percent * 0.01f) * 100.0f;
             }

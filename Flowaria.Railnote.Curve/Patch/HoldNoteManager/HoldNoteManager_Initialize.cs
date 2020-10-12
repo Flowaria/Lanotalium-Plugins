@@ -1,19 +1,13 @@
-﻿using Flowaria.Railnote.Curve.Lib;
-using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HarmonyLib;
 using UnityEngine;
 
 namespace Flowaria.Railnote.Curve.Patch
 {
     [HarmonyPatch(typeof(LimHoldNoteManager))]
     [HarmonyPatch("Initialize")]
-    static class HoldNoteManager_Initialize
+    internal static class HoldNoteManager_Initialize
     {
-        static void Prefix(LimHoldNoteManager __instance)
+        private static void Prefix(LimHoldNoteManager __instance)
         {
             var bundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/Assets/curvedrail");
             if (bundle == null)

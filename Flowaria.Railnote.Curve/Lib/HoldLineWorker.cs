@@ -22,7 +22,6 @@ namespace Flowaria.Railnote.Curve.Lib
         private static Func<float, float> _CalcMovePercent = null;
 
         private int _NoteSortingID;
-        
 
         private bool _initalized = false;
 
@@ -34,7 +33,7 @@ namespace Flowaria.Railnote.Curve.Lib
                 {
                     Destroy(this);
                 }
-                
+
                 _Tuner = LimTunerManager.Instance;
                 _TunerObject = GameObject.Find("LimTunerManager/Tuner");
                 _NoteSortingID = SortingLayer.NameToID("Note");
@@ -156,8 +155,8 @@ namespace Flowaria.Railnote.Curve.Lib
                 float startDegree, endDegree, deltaDegree;
                 int ease = 0;
 
-            //No Joints Variant
-            if (MeshRenderers.Length <= 1)
+                //No Joints Variant
+                if (MeshRenderers.Length <= 1)
                 {
                     startTime = Note.Time;
                     deltaTime = Note.Duration;
@@ -175,8 +174,8 @@ namespace Flowaria.Railnote.Curve.Lib
                         ease = Note.Joints[0].Cfmi;
                     }
                 }
-            //1+ Joints Variant
-            else
+                //1+ Joints Variant
+                else
                 {
                     var joint = Note.Joints[i];
                     startTime = joint.aTime - joint.dTime;
@@ -265,13 +264,12 @@ namespace Flowaria.Railnote.Curve.Lib
 
         public void ForceUpdate()
         {
-            for(int i = 0;i<MeshRenderers.Length;i++)
+            for (int i = 0; i < MeshRenderers.Length; i++)
             {
                 MeshRenderers[i].ClearMesh();
             }
         }
 
-        
         private float CalcEasedMovePercent(float time)
         {
             var percent = _CalcMovePercent(time);

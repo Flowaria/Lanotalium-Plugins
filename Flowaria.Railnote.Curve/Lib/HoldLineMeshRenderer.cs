@@ -25,7 +25,7 @@ namespace Flowaria.Railnote.Curve.Lib
 
         public int Length { get { return _Points.Length; } }
 
-        public float UVEnd { get { return  _UVStart + (_UVScale * Length); } }
+        public float UVEnd { get { return _UVStart + (_UVScale * Length); } }
 
         public Material material
         {
