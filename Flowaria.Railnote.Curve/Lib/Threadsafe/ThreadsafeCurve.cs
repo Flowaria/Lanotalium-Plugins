@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace Flowaria.Railnote.Curve.Lib
 {
-    public class ThreadsafeCurve
+    public sealed class ThreadsafeCurve
     {
         public int SampleCount { get; private set; } = 10;
-        public AnimationCurve Curve;
-        private Dictionary<long, float> _Values = new Dictionary<long, float>();
+        private readonly AnimationCurve _Curve;
+        private float[] _Values = null;
 
         private ThreadsafeCurve()
         {
@@ -16,17 +16,17 @@ namespace Flowaria.Railnote.Curve.Lib
         public ThreadsafeCurve(int sampleCount, AnimationCurve curve)
         {
             SampleCount = sampleCount;
-            Curve = curve;
+            _Curve = curve;
             Cache();
         }
 
         public void Cache()
         {
-            _Values.Clear();
+            _Values = new float[SampleCount + 1];
 
             for (int i = 0; i <= SampleCount; i++)
             {
-                _Values.Add(i, Curve.Evaluate(i / (float)SampleCount));
+                _Values[i] = _Curve.Evaluate(i / (float)SampleCount);
             }
         }
 

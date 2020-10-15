@@ -11,7 +11,7 @@ namespace Flowaria.Railnote.Curve.Lib
             var width = CalculateEasedCurve(percent);
             width *= 5.65f;
 
-            return Quaternion.Euler(0.0f, -width, 0.0f) * BasePoint;
+            return Quaternion.Euler(0.0f, -width, 0.0f) * BasePoint * (10.0f * percent);
         }
 
         public Vector3 GetRight(float percent)
@@ -19,7 +19,7 @@ namespace Flowaria.Railnote.Curve.Lib
             var width = CalculateEasedCurve(percent);
             width *= 5.65f;
 
-            return Quaternion.Euler(0.0f, +width, 0.0f) * BasePoint;
+            return Quaternion.Euler(0.0f, +width, 0.0f) * BasePoint * (10.0f * percent);
         }
 
         private float CalculateEasedCurve(float Percent)

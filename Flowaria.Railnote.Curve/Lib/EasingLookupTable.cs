@@ -1,12 +1,13 @@
-﻿using UnityEngine;
+﻿using Unity.Collections;
+using UnityEngine;
 
 namespace Flowaria.Railnote.Curve.Lib
 {
     public static class EasingLookupTable
     {
-        private static ThreadsafeCurve _Curve = null;
+        private readonly static ThreadsafeCurve _Curve;
 
-        private static ThreadsafeEase
+        private readonly static ThreadsafeEase
             T1, T2, T3,
             T4, T5, T6,
             T7, T8, T9,
@@ -14,7 +15,7 @@ namespace Flowaria.Railnote.Curve.Lib
 
         static EasingLookupTable()
         {
-            int sampleSize = 5000;
+            int sampleSize = 10000;
             T1 = new ThreadsafeEase(sampleSize, (p) => (p * p * p * p));
             T2 = new ThreadsafeEase(sampleSize, (p) => (-(p - 1) * (p - 1) * (p - 1) * (p - 1) + 1));
             T3 = new ThreadsafeEase(sampleSize, (p) => (p < 0.5) ? (p * p * p * p * 8) : ((p - 1) * (p - 1) * (p - 1) * (p - 1) * -8 + 1));
@@ -32,9 +33,9 @@ namespace Flowaria.Railnote.Curve.Lib
             T12 = new ThreadsafeEase(sampleSize, (p) => (Mathf.Cos((float)p * Mathf.PI) - 1) / -2);
 
             var curve = new AnimationCurve();
-            for (int i = 0; i <= 50; ++i)
+            for (int i = 0; i <= 100; ++i)
             {
-                float t = 0.02f * i;
+                float t = 0.01f * i;
                 Vector2 pt = CubicBeizer(t);
                 curve.AddKey(pt.x, pt.y);
             }

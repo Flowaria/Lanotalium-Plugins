@@ -1,17 +1,26 @@
 ﻿using Lanotalium.Chart;
 using System;
+using System.Collections;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Unity.Collections;
+using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 namespace Flowaria.Railnote.Curve.Lib
 {
-    public class HoldLineWorker : MonoBehaviour
+    public sealed class HoldLineWorker : MonoBehaviour
     {
+        private const BindingFlags BINDING_PRIVATE = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+
+        public static float QUALITY = 1.0f;
+        public static float UV_DURATION = 1.0f;
+        public static float UPDATE_INTERVAL = 0.05f;
+
         public LanotaHoldNote Note;
-        public HoldLineMeshRenderer[] MeshRenderers = new HoldLineMeshRenderer[0];
+        public HoldLineRenderer[] MeshRenderers = new HoldLineRenderer[0];
 
         public Material UnTouchMaterial;
         public Material TouchMaterial;
@@ -20,55 +29,159 @@ namespace Flowaria.Railnote.Curve.Lib
         private GameObject _TunerObject;
 
         private static Func<float, float> _CalcMovePercent = null;
+        private static LimHoldNoteManager _HoldManager = null;
 
         private int _NoteSortingID;
 
         private bool _initalized = false;
+
+        private float[] _NoteData = null;
+
+        private NativeArray<float> _ScrollTimes;
+        private NativeArray<float> _ScrollSpeeds;
 
         private void Update()
         {
             if (!_initalized)
             {
                 if (Note == null)
-                {
                     Destroy(this);
-                }
+
+                WriteNoteData();
 
                 _Tuner = LimTunerManager.Instance;
                 _TunerObject = GameObject.Find("LimTunerManager/Tuner");
                 _NoteSortingID = SortingLayer.NameToID("Note");
 
-                MethodInfo method = typeof(LimHoldNoteManager).GetMethod("CalculateMovePercent", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                _CalcMovePercent = (Func<float, float>)Delegate.CreateDelegate(typeof(Func<float, float>), _Tuner.HoldNoteManager, method);
+
+                //Check Update for MovePercent Delegate
+                bool shouldUpdateDelegate = false;
+                if(_HoldManager == null || _CalcMovePercent == null)
+                {
+                    _HoldManager = _Tuner.HoldNoteManager;
+                    shouldUpdateDelegate = true;
+                }
+                else if(_HoldManager != _Tuner.HoldNoteManager)
+                {
+                    _HoldManager = _Tuner.HoldNoteManager;
+                    shouldUpdateDelegate = true;
+                }
+
+                if(shouldUpdateDelegate)
+                {
+                    var managerType = typeof(LimHoldNoteManager);
+                    var method = managerType.GetMethod("CalculateMovePercent", BINDING_PRIVATE);
+                    var newDelegate = Delegate.CreateDelegate(typeof(Func<float, float>), _HoldManager, method);
+                    _CalcMovePercent = (Func<float, float>)newDelegate;
+                }
+
+                var scrolls = _Tuner.ScrollManager.Scroll;
+
+                _ScrollTimes = new NativeArray<float>(scrolls.Count, Allocator.Persistent);
+                _ScrollSpeeds = new NativeArray<float>(scrolls.Count, Allocator.Persistent);
+                for (int j = 0; j < scrolls.Count; j++)
+                {
+                    _ScrollSpeeds[j] = scrolls[j].Speed;
+                    _ScrollTimes[j] = scrolls[j].Time;
+                }
 
                 _initalized = true;
             }
 
+            
+
             CheckRendererCount();
-            UpdateRenderers();
+            UpdateRendererMeshValue();
+
+            UpdateRendererMesh();
         }
 
         private void OnEnable()
         {
-            for (int i = 0; i < MeshRenderers.Length; i++)
-            {
-                var renderer = MeshRenderers[i];
-                renderer.ClearMesh();
-                renderer.gameObject.SetActive(true);
-            }
+            //Restart Coroutine
+            StartCoroutine(NoteDataCheck());
         }
 
-        private void OnDisable()
+        void OnDisable()
         {
             for (int i = 0; i < MeshRenderers.Length; i++)
             {
                 var renderer = MeshRenderers[i];
                 renderer.ClearMesh();
-                renderer.gameObject.SetActive(false);
             }
         }
 
-        private int _lastRendererCount = 0;
+        private void OnDestroy()
+        {
+            for (int i = 0; i < MeshRenderers.Length; i++)
+            {
+                Destroy(MeshRenderers[i].gameObject);
+            }
+        }
+
+        private IEnumerator NoteDataCheck()
+        {
+            while (true)
+            {
+                if (IsNoteDataChanged())
+                {
+                    //Force Refresh
+                    LimOperationManager.Instance.RefreshJointAbsoluteValues(Note);
+                    WriteNoteData();
+                    ClearAllMesh();
+                }
+                yield return new WaitForSecondsRealtime(UPDATE_INTERVAL);
+            }
+        }
+
+        private void WriteNoteData()
+        {
+            int dataCount = 2 + (Note.Jcount * 3);
+            _NoteData = new float[dataCount];
+            _NoteData[0] = Note.Time;
+            _NoteData[1] = Note.Degree;
+            for (int i = 0; i < Note.Jcount; i++)
+            {
+                int offset = (i * 3) + 2;
+                _NoteData[offset + 0] = Note.Joints[i].dTime;
+                _NoteData[offset + 1] = Note.Joints[i].dDegree;
+                _NoteData[offset + 2] = Note.Joints[i].Cfmi;
+            }
+        }
+
+        private bool IsNoteDataChanged()
+        {
+            if(_NoteData == null)
+                return true;
+
+
+            int dataCount = 2 + (Note.Jcount * 3);
+            if (dataCount != _NoteData.Length)
+                return true;
+
+            if (_NoteData[0] != Note.Time)
+                return true;
+
+            if (_NoteData[1] != Note.Degree)
+                return true;
+
+            for (int i = 0; i < Note.Jcount; i++)
+            {
+                var joint = Note.Joints[i];
+                int offset = (i * 3) + 2;
+
+                if (_NoteData[offset + 0] != joint.dTime)
+                    return true;
+
+                if (_NoteData[offset + 1] != joint.dDegree)
+                    return true;
+
+                if (_NoteData[offset + 2] != joint.Cfmi)
+                    return true;
+            }
+
+            return false;
+        }
 
         private void CheckRendererCount()
         {
@@ -80,36 +193,14 @@ namespace Flowaria.Railnote.Curve.Lib
             }
 
             //more than before
-            if (_lastRendererCount < count)
+            if (MeshRenderers.Length < count)
             {
-                var newRenderers = new HoldLineMeshRenderer[count];
+                var newRenderers = new HoldLineRenderer[count];
                 for (int i = 0; i < count; i++)
                 {
                     if (i >= MeshRenderers.Length)
                     {
-                        var obj = GameObject.CreatePrimitive(PrimitiveType.Quad);
-                        obj.layer = 9;
-
-                        var renderer = obj.AddComponent<HoldLineMeshRenderer>();
-                        renderer.SortingLayerID = _NoteSortingID;
-                        renderer.SortingOrder = -32767;
-
-                        var sort = obj.AddComponent<SortingGroup>();
-                        sort.sortingLayerID = _NoteSortingID;
-                        sort.sortingOrder = -32767;
-
-                        var collider = obj.GetComponent<MeshCollider>();
-                        Destroy(collider);
-
-                        var mrenderer = obj.GetComponent<MeshRenderer>();
-                        mrenderer.enabled = false;
-
-                        obj.transform.SetParent(_TunerObject.transform, false);
-
-                        float scale = 1.0f / _TunerObject.transform.localScale.x;
-                        obj.transform.localScale = new Vector3(scale, scale, scale);
-
-                        newRenderers[i] = renderer;
+                        newRenderers[i] = CreateRendererObject().GetComponent<HoldLineRenderer>();
                     }
                     else
                     {
@@ -118,11 +209,9 @@ namespace Flowaria.Railnote.Curve.Lib
                 }
 
                 MeshRenderers = newRenderers;
-
-                _lastRendererCount = count;
             }
             //less than before
-            else if (_lastRendererCount > count)
+            else if (MeshRenderers.Length > count)
             {
                 //skip existing one
                 for (int i = count; i < MeshRenderers.Count(); i++)
@@ -130,23 +219,21 @@ namespace Flowaria.Railnote.Curve.Lib
                     Destroy(MeshRenderers[i].gameObject);
                 }
                 MeshRenderers = MeshRenderers.Take(count).ToArray();
-
-                _lastRendererCount = count;
             }
         }
 
-        private void UpdateRenderers()
+        private void UpdateRendererMeshValue()
         {
-            float uvRepeatTime = 1.0f;
+            float chartTime = _Tuner.ChartTime;
             float uvTileScale = TouchMaterial.mainTextureScale.x;
-            float uvTileScaleInverse = 1.0f / uvTileScale;
+            float uvTileScaleInverse = 1.0f / UV_DURATION;
 
             Parallel.For(0, MeshRenderers.Length,
             i =>
             {
                 var renderer = MeshRenderers[i];
 
-                if (!renderer._isAwakeCalled)
+                if (!renderer.DoneInitRenderer)
                 {
                     return;
                 }
@@ -187,66 +274,85 @@ namespace Flowaria.Railnote.Curve.Lib
                     ease = joint.Cfmi;
                 }
 
-                deltaDegree = endDegree - startDegree;
-
-                float unscaledTotalPoints = Mathf.Max(
-                    Mathf.Abs(deltaDegree) * 1.25f,
-                    (150.0f * deltaTime * 1.5f),
-                    100.0f);
-
-                int totalPoints = (int)(unscaledTotalPoints * 1.5f);
-
-                bool shouldInit = false;
-                if (!renderer.Initialized || renderer.Length != totalPoints)
+                if(startTime + deltaTime <= chartTime)
                 {
-                    renderer.SetPointCount(totalPoints);
-                    shouldInit = true;
+                    //Skip when joint is fully hidden
+                    renderer.Hide();
+                    return;
+                }
+                else
+                {
+                    renderer.Show();
                 }
 
-                var secPoints = (int)((uvRepeatTime / deltaTime) * totalPoints);
+                deltaDegree = endDegree - startDegree;
 
-                renderer.SetUVScale((1.0f / secPoints) * uvTileScaleInverse);
 
+                //Get Total Points count inside Joint
+                int totalPoints = 0;
+                if (!renderer.DoneInitMesh)
+                {
+                    float unscaledTotalPoints = DetermineIdealCount(deltaTime, deltaDegree);
+                    totalPoints = (int)(unscaledTotalPoints * QUALITY);
+
+                    renderer.SetCount(totalPoints);
+
+                    //Set UV Scale
+                    var secPoints = (int)((UV_DURATION / deltaTime) * totalPoints);
+                    renderer.SetUVScale((1.0f / secPoints) * uvTileScaleInverse);
+                }
+                else
+                {
+                    totalPoints = renderer.Length;
+                }
+
+                float percentStep = 1.0f / (float)(totalPoints - 1);
                 Parallel.For(0, totalPoints,
                 j =>
                 {
-                    //Last Index will be Start of the Rail
-                    float percent = (j / (float)(totalPoints - 1));
-                    percent = 1.0f - percent;
+                    //First Index will be Start of the Rail
+                    float percent = j * percentStep;
+                    float time = startTime + (deltaTime * percent);
 
-                    if (shouldInit)
+                    //Initialize Basic Info for Renderer
+                    if (!renderer.DoneInitMesh)
                     {
                         float degree = startDegree + (deltaDegree * EasingLookupTable.EaseEvaluate(percent, ease));
                         renderer.SetPointByDegree(j, degree);
+
+                        var isReverse = CalculateScrollSpeed(time) < 0.0f;
+                        renderer.SetReverseScrollSpeed(j, isReverse);
                     }
 
-                    float time = startTime + (deltaTime * percent);
+                    //Skip the move calculation for obvious one
+                    if (time <= chartTime)
+                    {
+                        renderer.SetPercent(j, 1.0f);
+                        return;
+                    }
 
+                    //Put Move percent to Renderer
                     float movePercent = CalcEasedMovePercent(time);
-                    renderer.SetPointPercent(j, movePercent * 0.01f);
+                    renderer.SetPercent(j, movePercent * 0.01f);
                 });
             });
+        }
 
-            bool touched = false;
-            if (Note.Time <= _Tuner.ChartTime)
-            {
-                touched = true;
-            }
-            else
-            {
-                touched = false;
-            }
-
+        private void UpdateRendererMesh()
+        {
+            float chartTime = _Tuner.ChartTime;
+            var rotation = new Vector3(0.0f, _Tuner.CameraManager.CurrentRotation + 180.0f, 0.0f);
+            //Finalize
             for (int i = 0; i < MeshRenderers.Length; i++)
             {
                 var renderer = MeshRenderers[i];
 
-                if (!renderer._isAwakeCalled)
+                if (!renderer.DoneInitRenderer || renderer.IsHidden)
                 {
-                    break;
+                    continue;
                 }
 
-                if (!renderer.Initialized)
+                if (!renderer.DoneInitMesh)
                 {
                     if (i >= 1)
                     {
@@ -255,14 +361,14 @@ namespace Flowaria.Railnote.Curve.Lib
                     renderer.InitMesh();
                 }
 
-                renderer.material = touched ? TouchMaterial : UnTouchMaterial;
+                renderer.Material = (Note.Time <= chartTime) ? TouchMaterial : UnTouchMaterial;
+                renderer.gameObject.transform.eulerAngles = rotation;
 
                 renderer.UpdateMeshImmediate();
-                renderer.gameObject.transform.eulerAngles = new Vector3(0.0f, _Tuner.CameraManager.CurrentRotation + 180.0f, 0.0f);
             }
         }
 
-        public void ForceUpdate()
+        public void ClearAllMesh()
         {
             for (int i = 0; i < MeshRenderers.Length; i++)
             {
@@ -270,10 +376,70 @@ namespace Flowaria.Railnote.Curve.Lib
             }
         }
 
+        private float DetermineIdealCount(float deltaTime, float deltaDegree)
+        {
+            float timeSegment = deltaTime * 100.0f;
+            float degreeSegment = Mathf.Abs(deltaDegree) * 2.0f;
+
+            return Mathf.Max(degreeSegment + timeSegment, 100.0f);
+        }
+
         private float CalcEasedMovePercent(float time)
         {
             var percent = _CalcMovePercent(time);
             return EasingLookupTable.MoveEasePercentEvaluate(percent, LimNoteEase.Instance.DemoMode);
+        }
+
+        private float CalculateScrollSpeed(float timing)
+        {
+            var scrolls = _Tuner.ScrollManager.Scroll;
+            if (scrolls != null)
+            {
+                for (int i = 0; i < scrolls.Count; i++)
+                {
+                    var scrTime = scrolls[i].Time;
+                    if (scrTime > timing)
+                    {
+                        if (i > 0)
+                        {
+                            return scrolls[i - 1].Speed;
+                        }
+                    }
+                    else if (timing == scrTime)
+                    {
+                        return scrolls[i].Speed;
+                    }
+                }
+            }
+
+            return 1.0f;
+        }
+
+        private GameObject CreateRendererObject()
+        {
+            var obj = GameObject.CreatePrimitive(PrimitiveType.Quad);
+            obj.layer = 9;
+
+            var renderer = obj.AddComponent<HoldLineRenderer>();
+            renderer.SortingLayerID = _NoteSortingID;
+            renderer.SortingOrder = -32767;
+
+            var sort = obj.AddComponent<SortingGroup>();
+            sort.sortingLayerID = _NoteSortingID;
+            sort.sortingOrder = -32767;
+
+            var collider = obj.GetComponent<MeshCollider>();
+            Destroy(collider);
+
+            var mrenderer = obj.GetComponent<MeshRenderer>();
+            mrenderer.enabled = false;
+
+            obj.transform.SetParent(_TunerObject.transform, false);
+
+            float scale = 1.0f / _TunerObject.transform.localScale.x;
+            obj.transform.localScale = new Vector3(scale, scale, scale);
+
+            return obj;
         }
     }
 }

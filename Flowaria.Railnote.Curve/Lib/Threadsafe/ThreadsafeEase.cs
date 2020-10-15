@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace Flowaria.Railnote.Curve.Lib
 {
-    public class ThreadsafeEase
+    public sealed class ThreadsafeEase
     {
         public int SampleCount { get; private set; } = 10;
-        private Dictionary<long, float> _Values = new Dictionary<long, float>();
+        private float[] _ValuesF;
 
         private ThreadsafeEase()
         {
@@ -21,18 +21,18 @@ namespace Flowaria.Railnote.Curve.Lib
 
         private void Cache(int sample, Func<float, float> evalFunc)
         {
-            _Values.Clear();
+            _ValuesF = new float[sample + 1];
 
             for (int i = 0; i <= SampleCount; i++)
             {
-                _Values.Add(i, evalFunc.Invoke(i / (float)SampleCount));
+                _ValuesF[i] = evalFunc.Invoke(i / (float)SampleCount);
             }
         }
 
         public float Evaluate(float time)
         {
             time = Mathf.Clamp01(time);
-            return _Values[Mathf.RoundToInt(time * SampleCount)];
+            return _ValuesF[Mathf.RoundToInt(time * SampleCount)];
         }
     }
 }

@@ -40,6 +40,10 @@
     <Reference Include="BepInEx.Harmony">
       <HintPath>C:\Dropbox\Dropbox\Lanotalium\Lanotalium.Launcher.v2\Lanotalium\Lanotalium\BepInEx\core\BepInEx.Harmony.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Dropbox\Dropbox\Lanotalium\Lanotalium.Launcher.v2\Lanotalium\Lanotalium\Lanotalium_Data\Managed\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Schwarzer.Lanotalium">
       <HintPath>C:\Dropbox\Dropbox\Lanotalium\Lanotalium.Launcher.v2\Lanotalium\Lanotalium\Lanotalium_Data\Managed\Schwarzer.Lanotalium.dll</HintPath>
     </Reference>
@@ -67,10 +71,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CurverailConfiguration.cs" />
     <Compile Include="Entry.cs" />
     <Compile Include="Lib\EasingLookupTable.cs" />
-    <Compile Include="Lib\HoldLineMeshRenderer.cs" />
+    <Compile Include="Lib\HoldLineRenderer.cs" />
     <Compile Include="Lib\HoldLineWorker.cs" />
+    <Compile Include="Lib\HoldLineWorkerMovePercentJob.cs" />
     <Compile Include="Lib\MeshPoint.cs" />
     <Compile Include="Lib\Threadsafe\ThreadsafeCurve.cs" />
     <Compile Include="Lib\Threadsafe\ThreadsafeEase.cs" />
@@ -78,12 +84,6 @@
     <Compile Include="Patch\HoldNoteManager\HoldNoteManager_InstantiateHeadNote.cs" />
     <Compile Include="Patch\HoldNoteManager\HoldNoteManager_UpdateAllLineMaterial.cs" />
     <Compile Include="Patch\HoldNoteManager\HoldNoteManager_UpdateAllLineRenderers.cs" />
-    <Compile Include="Patch\OperationManager\OperationManager_RefreshJointAbsoluteValues.cs" />
-    <Compile Include="Patch\OperationManager\OperationManager_SetHoldNoteDegree.cs" />
-    <Compile Include="Patch\OperationManager\OperationManager_SetHoldNoteDuration.cs" />
-    <Compile Include="Patch\OperationManager\OperationManager_SetHoldNoteTime.cs" />
-    <Compile Include="Patch\OperationManager\OperationManager_SetJointNoteDegree.cs" />
-    <Compile Include="Patch\OperationManager\OperationManager_SetJointNoteEase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
